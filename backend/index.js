@@ -2,8 +2,8 @@ import express from "express"
 import cors from "cors"
 import session from "express-session"
 import dotenv from "dotenv"
-import UserRoute from "./routes/UserRoute.js"
-import ProductRoute from "./routes/ProductRoute.js"
+import UserRoute from "./app/routes/UserRoute.js"
+import ProductRoute from "./app/routes/ProductRoute.js"
 // import db from "./config/Database.js"
 
 dotenv.config();
