@@ -4,15 +4,13 @@ import session from "express-session"
 import dotenv from "dotenv"
 import UserRoute from "./routes/UserRoute.js"
 import ProductRoute from "./routes/ProductRoute.js"
-import db from "./config/Database.js"
+// import db from "./config/Database.js"
 
 dotenv.config();
 
 const app = express()
 
-(async () => {
-    await db.sync()
-})();
+// await db.sync()
 
 app.use(session({
     secret:process.env.SESS_SECRET,
