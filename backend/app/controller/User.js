@@ -1,5 +1,6 @@
 import argon2 from "argon2";
 import User from "../models/UserModel.js";
+import { where } from "sequelize";
 
 export const getAllUser = async (req, res) => {
     try{
@@ -48,16 +49,61 @@ export const createUser = async (req, res) => {
             password:hashPassword,
             role:role
         })
-        res.status(200).json({msg:"Register Success"})
+        res.status(200).json({msg:"Registrasi Sukses"})
     } catch (error) {
         res.status(400).json({msg:error.message})
     }
 }
 
-export const updateUser = (req, res) => {
-    
+export const updateUser = async (req, res) => {
+    const user = await User.findOne({
+        where:{
+            id: req.params.id
+        }
+    })
+    if (!user) res.status(400).json({msg:"User Tidak Ditemukan"})
+    const {name, email, password, confirmPassword, role} = req.body;
+    if (password !== confirmPassword) {
+        res.status(400).json({msg:"Password dan Confirm Password tidak sama"})
+    }
+    let hashPassword;
+    if (password != "" || password != null) {
+        hashPassword = user.password
+    }else{
+        hashPassword = await argon2.hash(password)
+    }
+    try {
+        await User.update({
+            name:name,
+            email:email,
+            password:hashPassword,
+            role:role
+        }, {
+            where:{
+                id: user.id
+            }
+        })
+        res.status(200).json({msg:"Berhasil Update User"})
+    } catch (error) {
+        res.status(400).json({msg:error.message})
+    }
 }
 
-export const deleteUser = (req, res) => {
-    
+export const deleteUser = async (req, res) => {
+    const user = await User.findOne({
+        where:{
+            id: req.params.id
+        }
+    })
+    if (!user) res.status(400).json({msg:"User Tidak Ditemukan"})
+    try {
+        await User.destroy({
+            where:{
+                id: user.id
+            }
+        })
+        res.status(200).json({msg: "User Berhasil DiHapus"})
+    } catch (error) {
+        res.status(500).json({msg: error.message})
+    }
 }
