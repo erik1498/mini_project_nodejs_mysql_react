@@ -1,0 +1,46 @@
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "dionlaning@gmail.com",
+    "password":"12345"
+}
+
+###
+GET http://localhost:5000/introspect
+
+###
+DELETE http://localhost:5000/logout
+
+###
+GET http://localhost:5000/users
+
+###
+GET http://localhost:5000/users/57d919f7-eaaa-452a-b751-c65e979e8f15
+
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name" : "Dion Laning",
+    "email" : "dionlaning@gmail.com",
+    "password" : "12345",
+    "confirmPassword" : "12345",
+    "role" : "user"
+}
+
+###
+PUT http://localhost:5000/users/57d919f7-eaaa-452a-b751-c65e979e8f15
+Content-Type: application/json
+
+{
+    "name" : "Erick Hene",
+    "email" : "djefrison@gmail.com",
+    "password" : "12345",
+    "confirmPassword" : "12345",
+    "role" : "admin"
+}
+
+###
+DELETE http://localhost:5000/users/57d919f7-eaaa-452a-b751-c65e979e8f15

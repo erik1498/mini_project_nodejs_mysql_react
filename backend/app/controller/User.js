@@ -58,7 +58,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     const user = await User.findOne({
         where:{
-            id: req.params.id
+            uuid: req.params.id
         }
     })
     if (!user) res.status(400).json({msg:"User Tidak Ditemukan"})
@@ -90,13 +90,13 @@ export const updateUser = async (req, res) => {
 }
 
 export const deleteUser = async (req, res) => {
-    const user = await User.findOne({
-        where:{
-            id: req.params.id
-        }
-    })
-    if (!user) res.status(400).json({msg:"User Tidak Ditemukan"})
     try {
+        const user = await User.findOne({
+            where:{
+                uuid: req.params.id
+            }
+        })
+        if (!user) res.status(400).json({msg:"User Tidak Ditemukan"})
         await User.destroy({
             where:{
                 id: user.id
