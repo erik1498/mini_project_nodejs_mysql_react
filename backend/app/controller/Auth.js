@@ -7,9 +7,15 @@ export const loginUser = async (req, res) => {
             email: req.body.email
         }
     })
-    if (!user) res.status(401).json({msg:"Username atau password salah"})
+    if (!user) {
+        return res.status(401).json({msg:"Username atau password salah"})
+    }
+
     const match = await argon2.verify(user.password, req.body.password)
-    if (!match) res.status(401).json({msg:"Username atau password salah"})
+    if (!match) {
+        return res.status(401).json({msg:"Username atau password salah"})
+    }
+    
     req.session.userId = user.uuid
     const uuid = user.uuid
     const name = user.name
@@ -19,20 +25,19 @@ export const loginUser = async (req, res) => {
 }
 
 export const introspect = async (req, res) => {
-    if (req.session.userId) {
-        const user = await User.findOne({
-            attributes:[
-                "uuid", "name", "email", "role"
-            ],
-            where:{
-                uuid: req.session.userId
-            }
-        })
-        if (!user) res.status(401).json({msg:"Username atau password salah"})
-        res.status(200).json(user)
-    }else{
-        res.status(401).json({msg:"Mohon login ke akun anda"})
+    if (!req.session.userId) {
+        return res.status(401).json({msg:"Mohon login ke akun anda"})
     }
+    const user = await User.findOne({
+        attributes:[
+            "uuid", "name", "email", "role"
+        ],
+        where:{
+            uuid: req.session.userId
+        }
+    })
+    if (!user) res.status(401).json({msg:"Username atau password salah"})
+    res.status(200).json(user)
 }
 
 export const logoutUser = (req, res) => {

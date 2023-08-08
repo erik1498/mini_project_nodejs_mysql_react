@@ -102,7 +102,7 @@ export const deleteUser = async (req, res) => {
                 id: user.id
             }
         })
-        res.status(200).json({msg: "User Berhasil DiHapus"})
+        res.status(200).json({msg: "User Berhasil Dihapus"})
     } catch (error) {
         res.status(500).json({msg: error.message})
     }
