@@ -31,7 +31,6 @@ export default function Login() {
                 <div className="columns is-centered">
                     <div className="column is-4">
                         <form onSubmit={Auth} className="box">
-                            {isError && <p className="has-text-centered">{message}</p>}
                             <h1 className="title is-2">Sign In</h1>
                             <div className="field">
                                 <label className="label">Email</label>
@@ -45,6 +44,7 @@ export default function Login() {
                                     <input type="password" className="input" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="*******"/>
                                 </div>
                             </div>
+                            {isError && <p className="has-text-centered">{message}</p>}
                             <div className="field mt-5">
                                 <button type="submit" className="button is-success is-fullwidth">
                                     {isLoading ? 'Loading' : 'Login'}

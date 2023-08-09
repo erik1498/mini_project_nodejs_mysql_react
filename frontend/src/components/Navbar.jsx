@@ -1,8 +1,20 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux"
+import { LogOut, reset } from "../features/authSlice"
 
 
 export default function Navbar() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
+    const logOut = () => {
+        dispatch(LogOut());
+        dispatch(reset());
+        navigate("/")
+    }
+
     return <>
         <nav className="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
@@ -26,7 +38,7 @@ export default function Navbar() {
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
-                  <button className="button is-light">
+                  <button className="button is-light" onClick={logOut}>
                     Log out
                   </button>
                 </div>
